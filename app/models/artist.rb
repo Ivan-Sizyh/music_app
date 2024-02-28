@@ -9,8 +9,8 @@ class Artist < ApplicationRecord
   end
 
   def self.top(letter, count)
-    where("name LIKE ? OR name LIKE ?", "#{letter}%", "#{letter.downcase!}%")
-      .left_outer_joins(songs: :downloads)
+    where("name LIKE ? OR name LIKE ?", "#{letter}%", "#{letter.downcase}%")
+      .left_joins(songs: :downloads)
       .group(:id)
       .select("artists.*, COUNT(downloads.id) AS downloads_count")
       .order(downloads_count: :desc)
